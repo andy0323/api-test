@@ -123,8 +123,13 @@ function writeHandler(jsonObj, data) {
 
 function createMarkdown() {
 	doc_generate(process.cwd(), function(t) {
-		
-		exec('echo ' + t + ' >> api.md' );
+
+		fs.appendFile('api.md', t, 'utf-8', function(err) {
+			if (err) {
+				return;
+			};
+
+		});
 
 	}, function() {
 

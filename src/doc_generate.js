@@ -53,7 +53,7 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 			// start_with_req_obj(obj);
 			// util.inspect(obj)
 			res_to_md(obj,function(md){
-				console.log(md);
+
 				cb_succ(md);
 				//succ
 			},function(){
