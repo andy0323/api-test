@@ -30,7 +30,7 @@ function getRequest(jsonObj, completeCallback) {
 			form: jsonObj.params
 		}, 
 		function(err,httpResponse,body){
-			completeCallback(jsonObj, err, httpResponse, body);
+			completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
 		});
 }
 
@@ -44,6 +44,20 @@ function postRequest(jsonObj, completeCallback) {
 			form: jsonObj.params
 		}, 
 		function(err,httpResponse,body){
-			completeCallback(jsonObj, err, httpResponse, body);
+			completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
 		});
+}
+
+/**
+ *	返回格式转换
+ */
+function completeCallbackAgent(jsonObj, err, httpResponse, body, callback) {
+	
+	if (err) {
+		body = null;
+	}else {
+		body = JSON.parse(body);
+	}
+
+	callback(jsonObj, err, httpResponse, body);
 }
