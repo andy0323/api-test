@@ -1,0 +1,23 @@
+{
+  "name": "api-test",
+  "version": "1.0.0",
+  "description": "api-test ========",
+  "main": "request.js",
+  "scripts": {
+    "test": "api-test ./test/req.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andy0323/api-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andy0323/api-test/issues"
+  },
+  "homepage": "https://github.com/andy0323/api-test",
+  "dependencies": {
+    "commander": "^2.5.1",
+    "request": "^2.51.0"
+  }
+}
