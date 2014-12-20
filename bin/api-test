@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+console.log("api-test start");
+
 var fs      = require('fs'),
 	request = require('request'),
 	program = require('commander');
@@ -11,27 +13,66 @@ program
     	.option('-v, --verbose', '打印详细日志')
  	.parse(process.argv);
 
-function request(URL, type, argments) {
-	
+
+startTask('http://218.247.15.102/appfuse_emm_backend/v1/appschedule/list.json', 'post' , {});
+
+/**
+ * 请求完成回调
+ */
+function requestCompleteCallback(err, httpResponse, body) {
+	var outputContent = '';
+
+	if (err) {
+		outputContent = err;
+	}else {
+		outputContent = JSON.stringify(body, null, 4);
+	}
+
+	console.log(outputContent);
+}
+
+/**
+ * 开始执行请求
+ */
+function startTask(URL, type, argments) {
+
 	switch(type) {
 		case 'get' : 
+			getRequest(URL, argments, requestCompleteCallback);
 		break;
 
 		case 'post' :
+			postRequest(URL, argments, requestCompleteCallback);
 		break;
 
 		default:
 	};	
+}
 
-	request.post(
+/**
+ * GET请求
+ */
+function getRequest(URL, argments, completeCallback) {
+	request.get(
 		{
-			url : requestURL, 
-			form: form
+			url : URL, 
+			form: argments
 		}, 
 		function(err,httpResponse,body){
-			// 请求完成
-			console.log(body);
+			completeCallback(err, httpResponse, body);
 		});
 }
 
-console.log("api-test start");
+/**
+ * POST请求
+ */
+function postRequest(URL, argments, completeCallback) {
+	request.post(
+		{
+			url : URL, 
+			form: argments
+		}, 
+		function(err,httpResponse,body){
+			completeCallback(err, httpResponse, body);
+		});
+}
