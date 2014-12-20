@@ -17,6 +17,9 @@ function doc_generate_with_markdown(pwd_dir, cb_succ, cb_fail) {
 	mkdir("-p", pwd_dir + RESPONSE_FOLDER_NAME);
 	//
 	_to_markdown(pwd_dir, cb_succ, cb_fail);
+
+	var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
+	_to_html(api_md_file);
 }
 
 module.exports = doc_generate_with_markdown
@@ -69,9 +72,10 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 		var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
 		log("api_md_file = " + api_md_file);
 		
+		rm('-rf',api_md_file);
 		fs.exists(api_md_file, function( exists ){
 			if(exists == false){
-				fs.writeFile(api_md_file,'# api', function(err){
+				fs.writeFile(api_md_file,'', function(err){
 				    log('there is no api.md, now auto create it');
 				});
 					
@@ -89,7 +93,7 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 }
 
 
-function _to_html(source_file, cb_succ, cb_fail){
+function _to_html(source_file){
 	// todo
 	var source_file = source_file; //'/Users/sang/workspace/github/api-test/design.md';
 
