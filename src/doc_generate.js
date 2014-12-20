@@ -1,6 +1,7 @@
 var fs = require('fs');
 require('shelljs/global');
-
+var jsonreader = require('./jsonreader');
+var res_to_md = require('./res_to_md');
 
 REQUEST_FOLDER_NAME = "/request"
 RESPONSE_FOLDER_NAME = "/response"
@@ -43,13 +44,26 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 	  });
 	}	
 	
-	function markdown_processing_with_one_file(){
+	function markdown_processing_with_one_file(req_file){
 		// 解析，并把根据res生成的md内容，写到#{GENERATE_MARKDOWN_FILE_NAME}文件里
+		console.log(req_file);
 		
+		jsonreader(req_file, function(obj){
+			console.log("cb_succ")
+			// start_with_req_obj(obj);
+			util.inspect(obj)
+			res_to_md(obj,function(md){
+				//succ
+			},function(){
+				//fail
+			});
+		}, function(){
+			console.log("cb_fail")
+		});
 	}
 	
 	function create_api_md(){
-		var api_md_file = pwd_dir + GENERATE_MARKDOWN_FILE_NAME;
+		var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
 		log("api_md_file = " + api_md_file);
 		
 		fs.exists(api_md_file, function( exists ){
