@@ -91,7 +91,8 @@ function request_processing_with_file(req_file){
 		console.log("cb_fail")
 	});
 	
-	jsonreader(req_file).then(function (json) {
+	jsonreader(req_file).then(function (obj) {
+		request.task(req_obj, requestCompleteCallback);
 	    console.log("Successful json")
 	}).catch(SyntaxError, function (e) {
 	    console.error("file contains invalid json");
