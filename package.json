@@ -4,7 +4,7 @@
   "description": "api-test ========",
   "main": "request.js",
   "scripts": {
-		"start": "npm publish .",
+    "start": "npm publish .",
     "test": "cd play && ../bin/api-test"
   },
   "preferGlobal": "true",
@@ -23,6 +23,8 @@
   "homepage": "https://github.com/andy0323/api-test",
   "dependencies": {
     "commander": "^2.5.1",
-    "request": "^2.51.0"
+    "request": "^2.51.0",
+    "shelljs": "^0.3.0",
+    "walk": "^2.3.4"
   }
 }

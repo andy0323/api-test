@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+require('shelljs/global');
+var fs = require('fs');
+var jsonreader = require('../jsonreader');
 
-console.log("api-test start");
+REQUEST_FOLDER_NAME = "/request"
 
 var fs      = require('fs'),
 	request = require('../src/apiRequest.js'),
@@ -13,6 +16,90 @@ program
     	.option('-v, --verbose', '打印详细日志')
  	.parse(process.argv);
 
+<<<<<<< HEAD
+=======
+
+function main(){
+	parse_request()
+}
+
+main();
+
+// __dirname
+
+function log(t){
+	echo("[API-TEST LOG]" + t)
+}
+
+
+function parse_request(){
+	var request_dir = process.cwd() + REQUEST_FOLDER_NAME;
+	log("request_dir = " + request_dir);
+	
+	if (test('-d', request_dir) == false) {
+		mkdir('-p', request_dir);
+		log('request folder is empty. you need put some.req in request folder');
+		return;
+	};
+	
+	parse_with_request_dir(request_dir);	
+}
+
+
+// -- private
+function parse_with_request_dir(path){
+  var dirList = fs.readdirSync(path);
+ 
+  dirList.forEach(function(item){
+    if(fs.statSync(path + '/' + item).isFile()){
+			var req_file = path + '/' + item;
+			request_processing_with_file(req_file)
+    }
+  });
+ 
+  // 子目录，暂不处理，现在是广度优先。
+  dirList.forEach(function(item){
+    if(fs.statSync(path + '/' + item).isDirectory()){
+      walk(path + '/' + item);
+    }
+  });
+}
+
+function request_processing_with_file(req_file){
+	log("当前正在处理" + req_file);
+	var obj = "";
+	
+	jsonreader(file, function(obj){
+		console.log("cb_succ")
+		start_with_req_obj(obj);
+	}, function(){
+		console.log("cb_fail")
+	});
+}
+
+function start_with_req_obj(req_obj){
+	// 此处处理实际请求
+	request.task(req_obj, requestCompleteCallback);
+}
+
+var get = {
+	"name":"这是一个get请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appversions.json",
+	"type":"get",
+	"params":{
+
+	}
+};
+
+var post = {
+	"name":"这是一个post请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appschedule/list.json",
+	"type":"post",
+	"params":{
+	}
+};
+
+>>>>>>> a75545cae52e802e60ebe40b04ee98a2e2f70e1f
 request.task(post, requestCompleteCallback);
 
 /**
@@ -21,5 +108,4 @@ request.task(post, requestCompleteCallback);
 function writeHandler(data) {
 	console.log(data);
 }
-
 
