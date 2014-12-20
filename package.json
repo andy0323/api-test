@@ -5,8 +5,12 @@
   "main": "request.js",
   "scripts": {
     "start": "npm publish .",
-    "test": "cd play && ../bin/api-test"
+    "test": "cd play && ../bin/api-test",
+    "checkconflict": "ack '<<<<<<<'"
   },
+  "pre-commit": [
+    "checkconflict"
+  ],
   "preferGlobal": "true",
   "bin": {
     "api": "bin/api-test"
@@ -24,7 +28,9 @@
   "dependencies": {
     "commander": "^2.5.1",
     "request": "^2.51.0",
-    "shelljs": "^0.3.0",
-    "walk": "^2.3.4"
+    "shelljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "pre-commit": "0.0.9"
   }
 }
