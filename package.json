@@ -7,7 +7,7 @@
     "start": "npm publish .",
     "play": "cd play && node ../bin/api-test",
     "play2": "cd play && node-debug ../bin/api-test",
-		"test": "./node_modules/.bin/mocha -u tdd",
+    "test": "./node_modules/.bin/mocha -u tdd",
     "checkconflict": "ack '<<<<<<<'"
   },
   "pre-commit": [
@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/andy0323/api-test",
   "dependencies": {
+    "bluebird": "^2.4.0",
     "commander": "^2.5.1",
     "handlebars": "^2.0.0",
-    "eventproxy": "^0.3.1",
     "i5ting_toc": "^1.1.1",
     "request": "^2.51.0",
     "shelljs": "^0.3.0"

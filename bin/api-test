@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require('shelljs/global');
+var Promise = require("bluebird");
 var fs = require('fs');
 var jsonreader = require('../src/jsonreader');
 
@@ -24,9 +25,12 @@ program
  	.parse(process.argv);
 
 
+var filelist = [];
 function main(){
 	parse_request()
 }
+
+
 
 main();
 
@@ -48,6 +52,11 @@ function parse_request(){
 	};
 	
 	parse_with_request_dir(request_dir);	
+	console.log(filelist);
+	
+	Promise.all(filelist).then(function() {
+	    console.log("all the files were created");
+	});
 }
 
 
@@ -58,7 +67,8 @@ function parse_with_request_dir(path){
   dirList.forEach(function(item){
     if(fs.statSync(path + '/' + item).isFile()){
 			var req_file = path + '/' + item;
-			request_processing_with_file(req_file)
+			// request_processing_with_file(req_file)
+			filelist.push(req_file);
     }
   });
  
@@ -79,6 +89,14 @@ function request_processing_with_file(req_file){
 		start_with_req_obj(obj);
 	}, function(){
 		console.log("cb_fail")
+	});
+	
+	jsonreader(req_file).then(function (json) {
+	    console.log("Successful json")
+	}).catch(SyntaxError, function (e) {
+	    console.error("file contains invalid json");
+	}).error(function (e) {
+	    console.error("unable to read file, because: ", e.message);
 	});
 }
 
