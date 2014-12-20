@@ -3,7 +3,7 @@
 console.log("api-test start");
 
 var fs      = require('fs'),
-	request = require('request'),
+	request = require('../src/apiRequest.js'),
 	program = require('commander');
 	version = require("../package.json").version;
 
@@ -14,7 +14,24 @@ program
  	.parse(process.argv);
 
 
-startTask('http://218.247.15.102/appfuse_emm_backend/v1/appschedule/list.json', 'post' , {});
+var get = {
+	"name":"这是一个get请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appversions.json",
+	"type":"get",
+	"params":{
+
+	}
+};
+
+var post = {
+	"name":"这是一个post请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appschedule/list.json",
+	"type":"post",
+	"params":{
+	}
+};
+
+request.task(post, requestCompleteCallback);
 
 /**
  * 请求完成回调
@@ -28,51 +45,14 @@ function requestCompleteCallback(err, httpResponse, body) {
 		outputContent = JSON.stringify(body, null, 4);
 	}
 
-	console.log(outputContent);
+	writeHandler(outputContent)
 }
 
 /**
- * 开始执行请求
+ * 写入数据
  */
-function startTask(URL, type, argments) {
-
-	switch(type) {
-		case 'get' : 
-			getRequest(URL, argments, requestCompleteCallback);
-		break;
-
-		case 'post' :
-			postRequest(URL, argments, requestCompleteCallback);
-		break;
-
-		default:
-	};	
+function writeHandler(data) {
+	console.log(data);
 }
 
-/**
- * GET请求
- */
-function getRequest(URL, argments, completeCallback) {
-	request.get(
-		{
-			url : URL, 
-			form: argments
-		}, 
-		function(err,httpResponse,body){
-			completeCallback(err, httpResponse, body);
-		});
-}
 
-/**
- * POST请求
- */
-function postRequest(URL, argments, completeCallback) {
-	request.post(
-		{
-			url : URL, 
-			form: argments
-		}, 
-		function(err,httpResponse,body){
-			completeCallback(err, httpResponse, body);
-		});
-}
