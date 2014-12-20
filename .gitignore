@@ -30,3 +30,5 @@ node_modules
 **/*.res
 
 .DS_Store
+coverage
+test/preview
