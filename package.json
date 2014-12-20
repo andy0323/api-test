@@ -5,7 +5,8 @@
   "main": "request.js",
   "scripts": {
     "start": "npm publish .",
-    "play": "cd play && ../bin/api-test",
+    "play": "cd play && node ../bin/api-test",
+    "play2": "cd play && node-debug ../bin/api-test",
 		"test": "./node_modules/.bin/mocha -u tdd",
     "checkconflict": "ack '<<<<<<<'"
   },

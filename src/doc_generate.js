@@ -26,13 +26,13 @@ GENERATE_MARKDOWN_FILE_NAME = "api.md"
 
 function _to_markdown(pwd_dir, cb_succ, cb_fail){
 	// -- private
-	function parse_with_response_dir(path){
+	function parse_with_response_dir(path, cb_succ, cb_fail){
 	  var dirList = fs.readdirSync(path);
  
 	  dirList.forEach(function(item){
 	    if(fs.statSync(path + '/' + item).isFile()){
-				var req_file = path + '/' + item;
-				markdown_processing_with_one_file(req_file)
+			var req_file = path + '/' + item;
+			markdown_processing_with_one_file(req_file, cb_succ, cb_fail);
 	    }
 	  });
  
@@ -44,18 +44,21 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 	  });
 	}	
 	
-	function markdown_processing_with_one_file(req_file){
+	function markdown_processing_with_one_file(req_file, cb_succ, cb_fail){
 		// 解析，并把根据res生成的md内容，写到#{GENERATE_MARKDOWN_FILE_NAME}文件里
 		console.log(req_file);
 		
 		jsonreader(req_file, function(obj){
 			console.log("cb_succ")
 			// start_with_req_obj(obj);
-			util.inspect(obj)
+			// util.inspect(obj)
 			res_to_md(obj,function(md){
+				console.log(md);
+				cb_succ(md);
 				//succ
 			},function(){
 				//fail
+				cb_fail();
 			});
 		}, function(){
 			console.log("cb_fail")
@@ -68,12 +71,12 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 		
 		fs.exists(api_md_file, function( exists ){
 			if(exists == false){
-					fs.writeFile(api_md_file,'# api', function(err){
-					    log('there is no api.md, now auto create it');
-					});
-						
-					return;
-				}	
+				fs.writeFile(api_md_file,'# api', function(err){
+				    log('there is no api.md, now auto create it');
+				});
+					
+				return;
+			}	
 		});
 	}
 	
@@ -82,7 +85,7 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 	//
 	create_api_md();
 	//
-	parse_with_response_dir(response_dir);
+	parse_with_response_dir(response_dir, cb_succ, cb_fail);
 }
 
 

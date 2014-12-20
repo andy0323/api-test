@@ -8,7 +8,12 @@ REQUEST_FOLDER_NAME = "/request"
 var fs      = require('fs'),
 	request = require('../src/apiRequest.js'),
 	program = require('commander');
-	version = require("../package.json").version;
+	version = require('../package.json').version,
+	doc_generate     = require('../src/doc_generate');
+
+
+var files = find('-R', process.cwd()).filter(function(file) { return file.match(/\.req$/); });
+var fileCount = files.length;
 
 program
 	.version(version)
@@ -103,10 +108,25 @@ function writeHandler(jsonObj, data) {
 	var resName = jsonObj.file_name.replace(/.req/, '.res');
 	var resPath = 'response/' + resName;
 
-	fs.writeFile(resPath, data, function(err){
+	fs.writeFile(resPath, data, 'utf-8', function(err){
 	   
 	    if(err){
 	        return console.log(err);
 	    }
+	});	
+
+	fileCount--;
+	if (fileCount == 0) {
+		createMarkdown();
+	};
+}
+
+function createMarkdown() {
+	doc_generate(process.cwd(), function(t) {
+		
+		exec('echo ' + t + ' >> api.md' );
+
+	}, function() {
+
 	});
 }
