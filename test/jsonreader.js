@@ -1,4 +1,4 @@
-var jsonreader = require('../jsonreader');
+var jsonreader = require('../src/jsonreader');
 
 var file = '../play/request/get.req'
 // file = "./req.json"

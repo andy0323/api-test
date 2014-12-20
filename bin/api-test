@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('shelljs/global');
 var fs = require('fs');
-var jsonreader = require('../jsonreader');
+var jsonreader = require('../src/jsonreader');
 
 REQUEST_FOLDER_NAME = "/request"
 
