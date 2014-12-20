@@ -5,7 +5,7 @@ var request = require('request');
  */
 function startTask(jsonObj, completeCallback) {
 
-	switch(type) {
+	switch(jsonObj.type) {
 		case 'get' : 
 			getRequest(jsonObj, completeCallback);
 		break;
@@ -22,20 +22,29 @@ exports.task = startTask;
 
 
 /**
+ * 请求完成回调
+ */
+function requestCompleteCallback(jsonObj, err, httpResponse, body) {
+	var outputContent = '';
+
+	if (err) {
+		outputContent = err;
+	}else {
+		outputContent = JSON.stringify(body, null, 4);
+	}
+}
+
+/**
  * GET请求
  */
 function getRequest(jsonObj, completeCallback) {
-	var url  = jsonObj.url;
-	var type = jsonObj.type;
-	var arg  = jsonObj.params;
-
 	request.get(
 		{
-			url : URL, 
-			form: argments
+			url : jsonObj.url, 
+			form: jsonObj.params
 		}, 
 		function(err,httpResponse,body){
-			completeCallback(err, httpResponse, body);
+			completeCallback(jsonObj, err, httpResponse, body);
 		});
 }
 
@@ -43,16 +52,12 @@ function getRequest(jsonObj, completeCallback) {
  * POST请求
  */
 function postRequest(jsonObj, completeCallback) {
-	var url  = jsonObj.url;
-	var type = jsonObj.type;
-	var arg  = jsonObj.params;
-
 	request.post(
 		{
-			url : URL, 
-			form: argments
+			url : jsonObj.url, 
+			form: jsonObj.params
 		}, 
 		function(err,httpResponse,body){
-			completeCallback(err, httpResponse, body);
+			completeCallback(jsonObj, err, httpResponse, body);
 		});
 }
