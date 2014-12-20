@@ -1,11 +1,12 @@
 {
   "name": "api-test",
   "version": "1.0.0",
-  "description": "api-test ========",
+  "description": "api-test: it is a api degign && doc tools",
   "main": "request.js",
   "scripts": {
     "start": "npm publish .",
-    "test": "cd play && ../bin/api-test",
+    "play": "cd play && ../bin/api-test",
+		"test": "./node_modules/.bin/mocha -u tdd",
     "checkconflict": "ack '<<<<<<<'"
   },
   "pre-commit": [
@@ -33,6 +34,14 @@
     "shelljs": "^0.3.0"
   },
   "devDependencies": {
-    "pre-commit": "0.0.9"
+    "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-istanbul": "^0.5.0",
+    "gulp-mocha": "^2.0.0",
+    "mocha": "^2.0.1",
+    "pre-commit": "0.0.9",
+    "sinon": "^1.12.2",
+    "supertest": "^0.15.0",
+    "zombie": "^2.5.1"
   }
 }
