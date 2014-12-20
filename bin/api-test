@@ -1,1 +1,29 @@
 #!/usr/bin/env node
+
+var fs      = require('fs'),
+	request = require('request'),
+	program = require('commander');
+
+program
+	.version(version)
+    	.usage("api-test .")
+    	.option('-v, --verbose', '打印详细日志')
+ 	.parse(process.argv);
+
+// 判断文件是否存在
+
+// 存在..读取文件
+
+request.post(
+			{
+				url : requestURL, 
+				form: form
+			}, 
+			function(err,httpResponse,body){
+				// 请求完成
+				console.log(body);
+			});
+
+function request(URL, type, argments) {
+
+}
