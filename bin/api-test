@@ -83,21 +83,40 @@ function start_with_req_obj(req_obj){
 /**
  * 请求完成回调
  */
-function requestCompleteCallback(jsonObj, err, httpResponse, body) {
-	var outputContent = '';
+function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
+	var success = false;
 
-	if (err) {
-		outputContent = err;
-	}else {
-		outputContent = JSON.stringify(body, null, 4);
-	}
+	if (resErr == null) {
+		resErr = {};
+		success = true;
+	};
 
-	writeHandler(outputContent)
+	if (resBody) {
+		resBody = JSON.parse(resBody);
+	};
+
+	jsonObj.response = {
+		result : resBody,
+		err    : resErr,
+		status : success
+	};
+
+	var jsonString = JSON.stringify(jsonObj, null, 4);
+
+	writeHandler(jsonObj, jsonString)
 }
 
 /**
  * 写入数据
  */
-function writeHandler(data) {
-	console.log(data);
+function writeHandler(jsonObj, data) {
+	var resName = jsonObj.file_name.replace(/.req/, '.res');
+	var resPath = 'response/' + resName;
+
+	fs.writeFile(resPath, data, function(err){
+	   
+	    if(err){
+	        return console.log(err);
+	    }
+	});
 }
