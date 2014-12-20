@@ -27,6 +27,7 @@
   "homepage": "https://github.com/andy0323/api-test",
   "dependencies": {
     "commander": "^2.5.1",
+    "eventproxy": "^0.3.1",
     "i5ting_toc": "^1.1.1",
     "request": "^2.51.0",
     "shelljs": "^0.3.0"
