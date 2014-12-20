@@ -4,7 +4,12 @@
   "description": "api-test ========",
   "main": "request.js",
   "scripts": {
-    "test": "api-test ./test/req.json"
+		"start": "npm publish .",
+    "test": "cd play && ../bin/api-test"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "api": "bin/api-test"
   },
   "repository": {
     "type": "git",
