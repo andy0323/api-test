@@ -67,7 +67,7 @@ function request_processing_with_file(req_file){
 	log("当前正在处理" + req_file);
 	var obj = "";
 	
-	jsonreader(file, function(obj){
+	jsonreader(req_file, function(obj){
 		console.log("cb_succ")
 		start_with_req_obj(obj);
 	}, function(){
@@ -101,4 +101,3 @@ function requestCompleteCallback(err, httpResponse, body) {
 function writeHandler(data) {
 	console.log(data);
 }
-
