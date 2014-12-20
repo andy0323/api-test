@@ -117,8 +117,7 @@ function writeHandler(jsonObj, data) {
 	    }
 	});	
 
-	resCount++;
-	if (resCount == reqCount) {
+	if (++resCount == reqCount) {
 		createMarkdown();
 	};
 }

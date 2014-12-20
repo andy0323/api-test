@@ -58,6 +58,6 @@ function completeCallbackAgent(jsonObj, err, httpResponse, body, callback) {
 	}else {
 		body = JSON.parse(body);
 	}
-	console.log(1);
+
 	callback(jsonObj, err, httpResponse, body);
 }
