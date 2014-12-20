@@ -2,8 +2,10 @@
 require('shelljs/global');
 var fs = require('fs');
 var jsonreader = require('../src/jsonreader');
+var doc_generate = require("../src/doc_generate");
 
 REQUEST_FOLDER_NAME = "/request"
+RESPONSE_FOLDER_NAME = "/response"
 
 var fs      = require('fs'),
 	request = require('../src/apiRequest.js'),
@@ -18,6 +20,7 @@ program
 
 
 function main(){
+	mkdir("-p", process.cwd() + RESPONSE_FOLDER_NAME);
 	parse_request()
 }
 
@@ -100,4 +103,16 @@ function requestCompleteCallback(jsonObj, err, httpResponse, body) {
  */
 function writeHandler(data) {
 	console.log(data);
+}
+
+
+//-- doc generate
+
+function doc_generate(){
+	var response_dir = process.cwd() + RESPONSE_FOLDER_NAME;
+	doc_generate(response_dir,function(){
+		//succ
+	},function(){
+		//fail
+	});
 }
