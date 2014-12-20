@@ -83,7 +83,7 @@ function start_with_req_obj(req_obj){
 /**
  * 请求完成回调
  */
-function requestCompleteCallback(err, httpResponse, body) {
+function requestCompleteCallback(jsonObj, err, httpResponse, body) {
 	var outputContent = '';
 
 	if (err) {

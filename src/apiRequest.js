@@ -20,20 +20,6 @@ function startTask(jsonObj, completeCallback) {
 }
 exports.task = startTask;
 
-
-/**
- * 请求完成回调
- */
-function requestCompleteCallback(jsonObj, err, httpResponse, body) {
-	var outputContent = '';
-
-	if (err) {
-		outputContent = err;
-	}else {
-		outputContent = JSON.stringify(body, null, 4);
-	}
-}
-
 /**
  * GET请求
  */
