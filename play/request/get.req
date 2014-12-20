@@ -1,0 +1,9 @@
+{
+	"name":"这是一个get请求",
+	"url":"http://xxxx",
+	"type":"get",
+	"params":{
+		"id":"100001",
+		"name":"alfred"
+	}
+}
