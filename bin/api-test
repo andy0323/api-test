@@ -13,7 +13,9 @@ var fs      = require('fs'),
 
 
 var files = find('-R', process.cwd()).filter(function(file) { return file.match(/\.req$/); });
-var fileCount = files.length;
+var reqCount = files.length;
+var resCount = 0;
+var mdWriteCount = 0;
 
 program
 	.version(version)
@@ -115,8 +117,8 @@ function writeHandler(jsonObj, data) {
 	    }
 	});	
 
-	fileCount--;
-	if (fileCount == 0) {
+	resCount++;
+	if (resCount == reqCount) {
 		createMarkdown();
 	};
 }
@@ -125,10 +127,14 @@ function createMarkdown() {
 	doc_generate(process.cwd(), function(t) {
 
 		fs.appendFile('api.md', t, 'utf-8', function(err) {
+
+			if (++mdWriteCount == reqCount) {
+				console.log('写入完成');
+			};
+
 			if (err) {
 				return;
 			};
-
 		});
 
 	}, function() {

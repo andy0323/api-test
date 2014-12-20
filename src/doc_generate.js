@@ -19,7 +19,8 @@ function doc_generate_with_markdown(pwd_dir, cb_succ, cb_fail) {
 	_to_markdown(pwd_dir, cb_succ, cb_fail);
 
 	var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
-	_to_html(api_md_file);
+	
+	// _to_html(api_md_file);
 }
 
 module.exports = doc_generate_with_markdown
