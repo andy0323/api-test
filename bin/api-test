@@ -5,6 +5,17 @@ var jsonreader = require('../jsonreader');
 
 REQUEST_FOLDER_NAME = "/request"
 
+var fs      = require('fs'),
+	request = require('../src/apiRequest.js'),
+	program = require('commander');
+	version = require("../package.json").version;
+
+program
+	.version(version)
+    	.usage("api-test .")
+    	.option('-v, --verbose', '打印详细日志')
+ 	.parse(process.argv);
+
 
 function main(){
 	parse_request()
@@ -64,6 +75,49 @@ function request_processing_with_file(req_file){
 	});
 }
 
-function start_with_req_obj(obj){
+function start_with_req_obj(req_obj){
 	// 此处处理实际请求
+	request.task(req_obj, requestCompleteCallback);
 }
+
+var get = {
+	"name":"这是一个get请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appversions.json",
+	"type":"get",
+	"params":{
+
+	}
+};
+
+var post = {
+	"name":"这是一个post请求",
+	"url":"http://218.247.15.102/appfuse_emm_backend/v1/appschedule/list.json",
+	"type":"post",
+	"params":{
+	}
+};
+
+request.task(post, requestCompleteCallback);
+
+/**
+ * 请求完成回调
+ */
+function requestCompleteCallback(err, httpResponse, body) {
+	var outputContent = '';
+
+	if (err) {
+		outputContent = err;
+	}else {
+		outputContent = JSON.stringify(body, null, 4);
+	}
+
+	writeHandler(outputContent)
+}
+
+/**
+ * 写入数据
+ */
+function writeHandler(data) {
+	console.log(data);
+}
+
