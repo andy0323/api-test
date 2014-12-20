@@ -129,7 +129,9 @@ function createMarkdown() {
 		fs.appendFile('api.md', t, 'utf-8', function(err) {
 
 			if (++mdWriteCount == reqCount) {
-				console.log('写入完成');
+				var pwd_dir =  process.cwd();
+				var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
+				_to_html(api_md_file);
 			};
 
 			if (err) {
@@ -143,12 +145,12 @@ function createMarkdown() {
 }
 
 
-setTimeout(function(){
-	var pwd_dir =  process.cwd();
-	var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
-	_to_html(api_md_file);
+// setTimeout(function(){
+// 	var pwd_dir =  process.cwd();
+// 	var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
+// 	_to_html(api_md_file);
 	
-},5000);
+// },5000);
 
 
 function _to_html(source_file){
