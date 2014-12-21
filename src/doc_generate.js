@@ -6,7 +6,7 @@ var res_to_md = require('./res_to_md');
 
 REQUEST_FOLDER_NAME = "/request"
 RESPONSE_FOLDER_NAME = "/response"
-
+GENERATE_MARKDOWN_FILE_NAME = "api.md"
 
 function log(t){
 	echo("[API-TEST LOG]" + t)
@@ -23,7 +23,6 @@ function doc_generate_with_markdown(pwd_dir, cb_succ, cb_fail) {
 module.exports = doc_generate_with_markdown
 
 
-GENERATE_MARKDOWN_FILE_NAME = "api.md"
 
 function _to_markdown(pwd_dir, cb_succ, cb_fail){
 	var filelist = [];

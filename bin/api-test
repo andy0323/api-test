@@ -5,6 +5,8 @@ var fs = require('fs');
 var jsonreader = require('../src/jsonreader');
 
 REQUEST_FOLDER_NAME = "/request"
+RESPONSE_FOLDER_NAME = "/response"
+GENERATE_MARKDOWN_FILE_NAME = "api.md"
 
 var fs      = require('fs'),
 	request = require('../src/apiRequest.js'),
@@ -30,8 +32,6 @@ function main(){
 	parse_request()
 }
 
-
-
 main();
 
 // __dirname
@@ -40,9 +40,9 @@ function log(t){
 	echo("[API-TEST LOG]" + t)
 }
 
-
 function parse_request(){
 	var request_dir = process.cwd() + REQUEST_FOLDER_NAME;
+	var api_md_file = process.cwd() + '/' + GENERATE_MARKDOWN_FILE_NAME;
 	log("request_dir = " + request_dir);
 	
 	if (test('-d', request_dir) == false) {
@@ -51,11 +51,19 @@ function parse_request(){
 		return;
 	};
 	
+	if (test('-f', api_md_file) == false) {
+		mkdir('-p', request_dir);
+		log('当前目录没有api.md,不需要处理。');
+		return;
+	}else{
+		rm("-rf",api_md_file);
+		log('当前目录有api.md,已经清除了。');
+	}
+	
 	parse_with_request_dir(request_dir);	
 	console.log(filelist);
 	
 	// filelist = ["/Users/sang/workspace/github/api-test/play/request/get.req"];
-	
 	Promise.all(filelist).map(function(req_file) {
     console.log("单一文件处理");
 		return request_processing_with_file(req_file);
@@ -64,7 +72,6 @@ function parse_request(){
 		createMarkdown();
 	});
 }
-
 
 // -- private
 function parse_with_request_dir(path){
@@ -95,10 +102,10 @@ function request_processing_with_file(req_file){
 		obj.file_path = req_file;
 		return request.task(obj, requestCompleteCallback)
 	}).then(function(jsonObj, jsonString){
-		console.log("...");
+		log("writeHandler");
 		return writeHandler(jsonObj, jsonString);
 	}).then(function(){
-		console.log("...11");
+		log("...11");
 	}).catch(SyntaxError, function (e) {
 	    console.error("file contains invalid json");
 	}).error(function (e) {
@@ -106,11 +113,9 @@ function request_processing_with_file(req_file){
 	});
 }
 
-// function start_with_req_obj(req_obj){
-// 	// 此处处理实际请求
-// 	request.task(req_obj, requestCompleteCallback);
-// }
-
+/**
+ * only for test promise, please not use in product
+ */ 
 function sleep(seconds) {
   this.date = Math.round(new Date().getTime()/1000);
   while(1) {
@@ -123,7 +128,6 @@ function sleep(seconds) {
  * 请求完成回调
  */
 function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
-
 	jsonObj.response = {
 		result : resBody,
 		err    : resErr,
@@ -132,11 +136,7 @@ function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
 
 	var jsonString = JSON.stringify(jsonObj, null, 4);
 
-	
-	// sleep(5);
-	
-	// return Promise.resolve(jsonObj, jsonString);
-
+	// sleep(5);	
 	return writeHandler(jsonObj, jsonString)
 }
 
@@ -145,25 +145,19 @@ function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
  */
 function writeHandler(jsonObj, data) {
 	if(jsonObj){
-		console.log("writeHandler jsonObj exist,准备写入.res文件");
-		// return Promise.resolve(jsonObj,data);
+		log("writeHandler jsonObj exist,准备写入.res文件");
 		var resName = jsonObj.file_name.replace(/.req/, '.res');
 		var resPath = 'response/' + resName;
 
 		fs.writeFileSync(resPath, data, 'utf-8', function(err){
 		    if(err){
-		        return console.log(err);
+		        return log(err);
 		    }
 		});	
 
-		// if (++resCount == reqCount) {
-		// 	createMarkdown();
-		// };
-	
-
 		return Promise.resolve(jsonObj, data);
 	}else{
-		console.log("writeHandler jsonObj nil");
+		log("writeHandler jsonObj nil");
 		return Promise.resolve(jsonObj, data);
 	}
 }
@@ -175,11 +169,3 @@ function createMarkdown() {
 
 	});
 }
-
-
-// setTimeout(function(){
-// 	var pwd_dir =  process.cwd();
-// 	var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
-// 	_to_html(api_md_file);
-	
-// },5000);
