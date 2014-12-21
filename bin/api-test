@@ -54,8 +54,14 @@ function parse_request(){
 	parse_with_request_dir(request_dir);	
 	console.log(filelist);
 	
-	Promise.all(filelist).then(function() {
-	    console.log("all the files were created");
+	// filelist = ["/Users/sang/workspace/github/api-test/play/request/get.req"];
+	
+	Promise.all(filelist).map(function(req_file) {
+    console.log("单一文件处理");
+		return request_processing_with_file(req_file);
+	}).then(function(req_file) {
+		console.log("所有文件都处理都已经完成");
+		createMarkdown();
 	});
 }
 
@@ -83,17 +89,16 @@ function parse_with_request_dir(path){
 function request_processing_with_file(req_file){
 	log("当前正在处理" + req_file);
 	var obj = "";
-	
-	jsonreader(req_file, function(obj){
-		console.log("cb_succ")
-		start_with_req_obj(obj);
-	}, function(){
-		console.log("cb_fail")
-	});
-	
-	jsonreader(req_file).then(function (obj) {
-		request.task(req_obj, requestCompleteCallback);
-	    console.log("Successful json")
+
+	return jsonreader(req_file).then(function (obj) {
+		obj.file_name = req_file.split('/').pop();;
+		obj.file_path = req_file;
+		return request.task(obj, requestCompleteCallback)
+	}).then(function(jsonObj, jsonString){
+		console.log("...");
+		return writeHandler(jsonObj, jsonString);
+	}).then(function(){
+		console.log("...11");
 	}).catch(SyntaxError, function (e) {
 	    console.error("file contains invalid json");
 	}).error(function (e) {
@@ -101,9 +106,17 @@ function request_processing_with_file(req_file){
 	});
 }
 
-function start_with_req_obj(req_obj){
-	// 此处处理实际请求
-	request.task(req_obj, requestCompleteCallback);
+// function start_with_req_obj(req_obj){
+// 	// 此处处理实际请求
+// 	request.task(req_obj, requestCompleteCallback);
+// }
+
+function sleep(seconds) {
+  this.date = Math.round(new Date().getTime()/1000);
+  while(1) {
+    if(Math.round(new Date().getTime()/1000) - this.date >= seconds) break;
+  }
+  return true;
 }
 
 /**
@@ -119,43 +132,44 @@ function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
 
 	var jsonString = JSON.stringify(jsonObj, null, 4);
 
-	writeHandler(jsonObj, jsonString)
+	
+	// sleep(5);
+	
+	// return Promise.resolve(jsonObj, jsonString);
+
+	return writeHandler(jsonObj, jsonString)
 }
 
 /**
  * 写入数据
  */
 function writeHandler(jsonObj, data) {
-	var resName = jsonObj.file_name.replace(/.req/, '.res');
-	var resPath = 'response/' + resName;
+	if(jsonObj){
+		console.log("writeHandler jsonObj exist,准备写入.res文件");
+		// return Promise.resolve(jsonObj,data);
+		var resName = jsonObj.file_name.replace(/.req/, '.res');
+		var resPath = 'response/' + resName;
 
-	fs.writeFile(resPath, data, 'utf-8', function(err){
-	   
-	    if(err){
-	        return console.log(err);
-	    }
-	});	
+		fs.writeFileSync(resPath, data, 'utf-8', function(err){
+		    if(err){
+		        return console.log(err);
+		    }
+		});	
 
-	if (++resCount == reqCount) {
-		createMarkdown();
-	};
+		// if (++resCount == reqCount) {
+		// 	createMarkdown();
+		// };
+	
+
+		return Promise.resolve(jsonObj, data);
+	}else{
+		console.log("writeHandler jsonObj nil");
+		return Promise.resolve(jsonObj, data);
+	}
 }
 
 function createMarkdown() {
 	doc_generate(process.cwd(), function(t) {
-
-		fs.appendFile('api.md', t, 'utf-8', function(err) {
-
-			if (++mdWriteCount == reqCount) {
-				var pwd_dir =  process.cwd();
-				var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
-				_to_html(api_md_file);
-			};
-
-			if (err) {
-				return;
-			};
-		});
 
 	}, function() {
 
@@ -169,29 +183,3 @@ function createMarkdown() {
 // 	_to_html(api_md_file);
 	
 // },5000);
-
-
-function _to_html(source_file){
-	// todo
-	var source_file = source_file; //'/Users/sang/workspace/github/api-test/design.md';
-
-	//函数可以返回当前正在执行的项目路径
-	var pwd = process.cwd()  
-
-	var source_file_name = source_file;
-	var file_name = source_file_name.split('/').pop();;
-	var _file_name = file_name.split('.')[0];
-
-	var dest_file_path = pwd + '/preview/' + _file_name + '.html';
-
-	console.log('pwd=' + pwd);
-	console.log('source_file_name=' + source_file_name);
-	console.log('dest_file_path=' + dest_file_path);
-
-	var is_open = true;
-	var markd_config = {
-		debug: false
-	}
-
-	require('i5ting_toc')(pwd, source_file_name, dest_file_path, is_open, markd_config);	
-}

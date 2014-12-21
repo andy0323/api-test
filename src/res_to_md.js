@@ -1,8 +1,10 @@
-var fs = require('fs');
+var Promise = require("bluebird");
+var fs = Promise.promisifyAll(require("fs"));
+
 var shell = require('shelljs');
 var Handlebars = require('handlebars');
 
-function res_to_md(res_obj, cb_succ, cb_fail) {
+function res_to_md(res_obj, api_md_file ,cb_succ, cb_fail) {
 	var name     = res_obj.name;
 	var url      = res_obj.url;
 	var type     = res_obj.type;
@@ -40,7 +42,18 @@ function res_to_md(res_obj, cb_succ, cb_fail) {
 	var result = template(res_obj);
 
 	cb_succ(result);
-	return result;
+	createMarkdown(api_md_file ,result);
+	
+	return Promise.resolve(result);
+}
+
+function createMarkdown(api_md_file ,t){
+	console.log(t)
+	fs.appendFileSync(api_md_file, t, 'utf-8', function(err) {
+		if (err) {
+			return;
+		};
+	});
 }
 
 module.exports = res_to_md
