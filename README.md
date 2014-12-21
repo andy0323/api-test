@@ -3,6 +3,8 @@ api-test
 
 it is a api degign && doc tools
 
+![](doc/1.png)
+
 ## install 
 
 	[sudo] npm install -g api-test
