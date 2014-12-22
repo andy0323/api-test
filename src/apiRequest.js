@@ -20,7 +20,6 @@ function startTask(jsonObj, completeCallback) {
 			console.log('不支持所提供的方式');
 	};	
 }
-
 exports.task = startTask;
 
 /**
@@ -56,14 +55,28 @@ function getRequest(jsonObj, completeCallback) {
  * POST请求
  */
 function postRequest(jsonObj, completeCallback) {
-	request.post(
-		{
-			url : jsonObj.url, 
-			form: jsonObj.params
-		}, 
-		function(err,httpResponse,body){
-			completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
-		});
+	return request.postAsync({
+		url : jsonObj.url, 
+		form: jsonObj.params
+	}).spread(function(httpResponse, body){
+		var err = null;
+    return completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
+	}).error(function(err){
+		console.error("unable to get, because: ", err.message);
+		var body = null;
+		var httpResponse = null;
+	   //handle error here
+    return completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
+	})
+
+	// request.post(
+	// 	{
+	// 		url : jsonObj.url, 
+	// 		form: jsonObj.params
+	// 	}, 
+	// 	function(err,httpResponse,body){
+	// 		completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
+	// 	});
 }
 
 /**
