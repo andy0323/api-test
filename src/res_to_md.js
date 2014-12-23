@@ -35,7 +35,7 @@ function res_to_md(res_obj, api_md_file ,cb_succ, cb_fail) {
 								JSON.stringify(response.err, null, 4);
 
 	// 模板
-	var source = shell.cat('../test/vendor/res_to_md.tpl');
+	var source = shell.cat('../vendor/res_to_md.tpl');
 	var template = Handlebars.compile(source);
 
 	// 转换后信息
