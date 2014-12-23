@@ -20,7 +20,6 @@ function startTask(jsonObj, completeCallback) {
 			console.log('不支持所提供的方式');
 	};	
 }
-
 exports.task = startTask;
 
 /**
@@ -69,15 +68,6 @@ function postRequest(jsonObj, completeCallback) {
 	   //handle error here
     return completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
 	})
-	
-	// request.post(
-	// 	{
-	// 		url : jsonObj.url,
-	// 		form: jsonObj.params
-	// 	},
-	// 	function(err,httpResponse,body){
-	// 		completeCallbackAgent(jsonObj, err, httpResponse, body, completeCallback);
-	// 	});
 }
 
 /**
