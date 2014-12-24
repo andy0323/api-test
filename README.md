@@ -7,12 +7,21 @@ it is a api degign && doc tools
 
 ![](doc/1.png)
 
-## install 
+
+## Features
+
+- [x] 支持get请求
+- [x] 支持post请求
+- [x] 支持upload请求
+- [x] 支持markdown文档
+- [x] 支持生成toc文档
+
+## Install 
 
 	[sudo] npm install -g api-test
 
 
-## run 
+## Run 
 
 	cd somedir
 	api
