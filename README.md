@@ -3,7 +3,7 @@ api-test
 
 it is a api degign && doc tools
 
-[![npm version](https://badge.fury.io/js/api-test.svg)](http://badge.fury.io/js/api-test)
+[![npm version](https://badge.fury.io/js/i-api.svg)](http://badge.fury.io/js/i-api)
 
 ![](doc/v2.png)
 
