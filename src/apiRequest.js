@@ -115,7 +115,7 @@ function uploadRequest(jsonObj, completeCallback){
 		
 		if(httpResponse.statusCode == 302){
 			err = new Error("目前的测试上传地址有问题，请求失败");
-			// err = null;
+			err = null;
 			console.log("目前的测试上传地址有问题，请求失败");
 			body = httpResponse;
 		}
@@ -148,7 +148,9 @@ function completeCallbackAgent(jsonObj, err, httpResponse, body, callback) {
 	if (err) {
 		body = null;
 	}else {
-		body = JSON.parse(body);
+		if(httpResponse.statusCode == 200){
+			body = JSON.parse(body);
+		}
 	}
 
 	callback(jsonObj, err, httpResponse, body);

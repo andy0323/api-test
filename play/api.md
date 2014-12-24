@@ -100,11 +100,44 @@ upload
 }
 ```
 
-## 响应内容 (请求失败)
+## 响应内容 (请求成功)
 
-### 错误信息
+### 响应体内容
 
 ```
-{}
+{
+    "statusCode": 302,
+    "body": "Moved Temporarily. Redirecting to /",
+    "headers": {
+        "x-powered-by": "Express",
+        "location": "/",
+        "vary": "Accept",
+        "content-type": "text/plain; charset=utf-8",
+        "content-length": "35",
+        "date": "Wed, 24 Dec 2014 13__02__17 GMT",
+        "connection": "keep-alive"
+    },
+    "request": {
+        "uri": {
+            "protocol": "http__",
+            "slashes": true,
+            "auth": null,
+            "host": "127.0.0.1__3456",
+            "port": "3456",
+            "hostname": "127.0.0.1",
+            "hash": null,
+            "search": null,
+            "query": null,
+            "pathname": "/post/formdata",
+            "path": "/post/formdata",
+            "href": "http__//127.0.0.1__3456/post/formdata"
+        },
+        "method": "POST",
+        "headers": {
+            "content-type": "multipart/form-data; boundary=--------------------------054632406431976149445740",
+            "content-length": 3430283
+        }
+    }
+}
 ```
 
