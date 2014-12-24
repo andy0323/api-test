@@ -5,7 +5,7 @@ it is a api degign && doc tools
 
 [![npm version](https://badge.fury.io/js/api-test.svg)](http://badge.fury.io/js/api-test)
 
-![](doc/1.png)
+![](doc/v2.png)
 
 
 ## Features
