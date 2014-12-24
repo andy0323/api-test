@@ -43,6 +43,9 @@ function log(t){
 function parse_request(){
 	var request_dir = process.cwd() + REQUEST_FOLDER_NAME;
 	var api_md_file = process.cwd() + '/' + GENERATE_MARKDOWN_FILE_NAME;
+	var response_dir = process.cwd() + RESPONSE_FOLDER_NAME;
+	
+	rm("-rf",response_dir+'/*.res');
 	log("request_dir = " + request_dir);
 	
 	if (test('-d', request_dir) == false) {
@@ -100,6 +103,8 @@ function request_processing_with_file(req_file){
 	return jsonreader(req_file).then(function (obj) {
 		obj.file_name = req_file.split('/').pop();;
 		obj.file_path = req_file;
+		obj.pwd = process.cwd();
+		console.log(obj);
 		return request.task(obj, requestCompleteCallback)
 	}).then(function(jsonObj, jsonString){
 		log("writeHandler");
@@ -124,6 +129,16 @@ function sleep(seconds) {
   return true;
 }
 
+function decode_url(url){
+	url = url.replace(/__/g,':');
+	return url;
+}
+
+function get_url(jsonObj){
+	var url = jsonObj['url'];
+	return decode_url(url);
+}
+
 /**
  * 请求完成回调
  */
@@ -134,6 +149,7 @@ function requestCompleteCallback(jsonObj, resErr, httpResponse, resBody) {
 		status : (resErr==null) ? true : false
 	};
 
+	jsonObj.url = get_url(jsonObj);
 	var jsonString = JSON.stringify(jsonObj, null, 4);
 
 	// sleep(5);	

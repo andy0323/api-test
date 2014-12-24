@@ -1,0 +1,9 @@
+{
+  "name": "这是一个upload请求",
+  "url": "http://127.0.0.1:3456/post/formdata",
+  "type": "upload",
+  "params": {
+    "names": "pic",
+    "filename": "da_qin_huang_ling_.mobi"
+  }
+}

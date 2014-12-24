@@ -25,3 +25,9 @@ it is a api degign && doc tools
 读取req对应的response返回的结果
 
 生成markdown格式文档，利用i5ting_toc生成文档
+
+
+## post
+
+	sudo npm install -g upload-cli
+	sudo uc

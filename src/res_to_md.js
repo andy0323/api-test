@@ -4,7 +4,19 @@ var fs = Promise.promisifyAll(require("fs"));
 var shell = require('shelljs');
 var Handlebars = require('handlebars');
 
+function decode_url(url){
+	url = url.replace(/__/g,':');
+	return url;
+}
+
+function get_url(jsonObj){
+	var url = jsonObj['url'];
+	return decode_url(url);
+}
+
 function res_to_md(res_obj, api_md_file ,cb_succ, cb_fail) {
+	res_obj.url = get_url(res_obj);
+	
 	var name     = res_obj.name;
 	var url      = res_obj.url;
 	var type     = res_obj.type;
