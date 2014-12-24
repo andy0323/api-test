@@ -85,7 +85,7 @@ post
 
 ## 请求连接 
 
-http://127.0.0.1:3456/post/formdata
+http://127.0.0.1:3456/post/formdata.json
 
 ## 请求类型 
 
@@ -106,37 +106,12 @@ upload
 
 ```
 {
-    "statusCode": 302,
-    "body": "Moved Temporarily. Redirecting to /",
-    "headers": {
-        "x-powered-by": "Express",
-        "location": "/",
-        "vary": "Accept",
-        "content-type": "text/plain; charset=utf-8",
-        "content-length": "35",
-        "date": "Wed, 24 Dec 2014 14__22__09 GMT",
-        "connection": "keep-alive"
+    "data": {
+        "path": "/Users/sang/workspace/github/uploads"
     },
-    "request": {
-        "uri": {
-            "protocol": "http__",
-            "slashes": true,
-            "auth": null,
-            "host": "127.0.0.1__3456",
-            "port": "3456",
-            "hostname": "127.0.0.1",
-            "hash": null,
-            "search": null,
-            "query": null,
-            "pathname": "/post/formdata",
-            "path": "/post/formdata",
-            "href": "http__//127.0.0.1__3456/post/formdata"
-        },
-        "method": "POST",
-        "headers": {
-            "content-type": "multipart/form-data; boundary=--------------------------484702251623218149510569",
-            "content-length": 3430283
-        }
+    "status": {
+        "code": 0,
+        "msg": "success."
     }
 }
 ```

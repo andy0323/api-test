@@ -1,6 +1,6 @@
 {
   "name": "这是一个upload请求",
-  "url": "http://127.0.0.1:3456/post/formdata",
+  "url": "http://127.0.0.1:3456/post/formdata.json",
   "type": "upload",
   "params": {
     "names": "pic",

@@ -12,7 +12,7 @@ it is a api degign && doc tools
 
 - [x] 支持get请求
 - [x] 支持post请求
-- [x] 支持upload请求
+- [x] 支持upload请求(测试上传服务可以使用https://github.com/i5ting/upload-cli)
 - [x] 支持markdown文档
 - [x] 支持生成toc文档
 
