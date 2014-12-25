@@ -3,8 +3,6 @@ var request = require('request');
 var Promise = require("bluebird");
 Promise.promisifyAll(require("request"));
 
-require('request').debug = true
-
 function decode_url(url){
 	url = url.replace(/__/g,':');
 	return url;
