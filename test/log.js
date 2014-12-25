@@ -1,31 +1,33 @@
-var Console = require('../src/log');
+var console = require('../src/log');
 
 
-Console.debug = true;
+console.debug = true;
 
-Console.set_log_request(true);
+console.set_log_request(true);
 
-Console.log("debug = true;");
+console.log("debug = true;");
 
 
 var request = require('request');
 request('http://www.baidu.com', function (error, response, body) {
   if (!error && response.statusCode == 200) {
+		console.debug = true;
     console.log("第一次请求baidu成功") // Show the HTML for the Google homepage.
   }
 })
 
 
-Console.log("---------------------------------------------\n");
+console.log("---------------------------------------------\n");
 
-Console.debug = false;
+console.debug = false;
 
-Console.set_log_request(false);
+console.set_log_request(false);
 
-Console.log("debug = false;");
+console.log("debug = false;");
 
 request('http://www.baidu.com', function (error, response, body) {
   if (!error && response.statusCode == 200) {
+		console.debug = true;
     console.log("第二次请求baidu成功") // Show the HTML for the Google homepage.
   }
 })
