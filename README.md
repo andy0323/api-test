@@ -52,6 +52,7 @@ it is a api degign && doc tools
 
 ## History
 
+- v1.1.1 增加了get/post/upload请求，主要是upload部分
 - v1.0.0 初始化版本
 
 ## Welcome fork and feedback
