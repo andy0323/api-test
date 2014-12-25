@@ -1,8 +1,9 @@
 var Promise = require("bluebird");
 var fs = Promise.promisifyAll(require("fs"));
-
 var shell = require('shelljs');
 var Handlebars = require('handlebars');
+
+var Console = require('../src/log');
 
 function decode_url(url){
 	url = url.replace(/__/g,':');

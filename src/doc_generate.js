@@ -3,13 +3,14 @@ var fs = Promise.promisifyAll(require("fs"));
 require('shelljs/global');
 var jsonreader = require('./jsonreader');
 var res_to_md = require('./res_to_md');
+var console = require('../src/log');
 
 REQUEST_FOLDER_NAME = "/request"
 RESPONSE_FOLDER_NAME = "/response"
 GENERATE_MARKDOWN_FILE_NAME = "api.md"
 
 function log(t){
-	echo("[API-TEST LOG]" + t)
+	//echo("[API-TEST LOG]" + t)
 }
 
 

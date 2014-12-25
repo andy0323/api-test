@@ -4,6 +4,13 @@ var Promise = require("bluebird");
 var fs = require('fs');
 var jsonreader = require('../src/jsonreader');
 
+var console = require('../src/log');
+
+
+console.debug = false;
+console.set_log_request(false);
+
+
 REQUEST_FOLDER_NAME = "/request"
 RESPONSE_FOLDER_NAME = "/response"
 GENERATE_MARKDOWN_FILE_NAME = "api.md"
@@ -37,7 +44,7 @@ main();
 // __dirname
 
 function log(t){
-	echo("[API-TEST LOG]" + t)
+	// echo("[API-TEST LOG]" + t)
 }
 
 function parse_request(){
