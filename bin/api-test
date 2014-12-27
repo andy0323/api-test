@@ -119,9 +119,9 @@ function request_processing_with_file(req_file){
 	}).then(function(){
 		log("...11");
 	}).catch(SyntaxError, function (e) {
-	    console.error("file contains invalid json");
+	    console.log("file contains invalid json");
 	}).error(function (e) {
-	    console.error("unable to read file, because: ", e.message);
+	    console.log("unable to read file, because: ", e.message);
 	});
 }
 
