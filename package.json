@@ -32,7 +32,7 @@
     "commander": "^2.5.1",
     "handlebars": "^2.0.0",
     "i5ting_toc": "^1.1.1",
-    "logge": "^1.0.0",
+    "logge": "^1.1.0",
     "request": "^2.51.0",
     "shelljs": "^0.3.0"
   },
