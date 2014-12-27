@@ -3,7 +3,7 @@ var fs = Promise.promisifyAll(require("fs"));
 require('shelljs/global');
 var jsonreader = require('./jsonreader');
 var res_to_md = require('./res_to_md');
-var console = require('../src/log');
+var console = require('logge');
 
 REQUEST_FOLDER_NAME = "/request"
 RESPONSE_FOLDER_NAME = "/response"

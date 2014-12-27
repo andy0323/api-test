@@ -1,7 +1,7 @@
 // var fs = require('fs');
 var Promise = require("bluebird");
 var fs = Promise.promisifyAll(require("fs"));
-var console = require('../src/log');
+var console = require('logge');
 
 function read_json(file, cb_succ, cb_fail) {
 	// function parseJson (file, er, content, cb_succ, cb_fail) {

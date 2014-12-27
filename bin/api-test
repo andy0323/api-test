@@ -2,9 +2,9 @@
 require('shelljs/global');
 var Promise = require("bluebird");
 var fs = require('fs');
-var jsonreader = require('../src/jsonreader');
+var console = require('logge');
 
-var console = require('../src/log');
+var jsonreader = require('../src/jsonreader');
 
 
 console.debug = false;
