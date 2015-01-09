@@ -53,6 +53,7 @@ it is a api degign && doc tools
 ## History
 
 
+- v1.1.3 增加req的desc属性，支持markdown格式
 - v1.1.2 修改tpl路径问题
 - v1.1.1 增加了get/post/upload请求，主要是upload部分
 - v1.0.0 初始化版本
