@@ -48,6 +48,14 @@ function res_to_md(res_obj, api_md_file ,cb_succ, cb_fail) {
 	res_obj.title   = success ? '响应体内容' : '错误信息';
 	res_obj.content = success ? JSON.stringify(response.result, null, 4):
 								JSON.stringify(response.err, null, 4);
+	
+	// 状态
+	res_obj.status =  success ? '请求成功' : '请求失败';
+	
+	//描述
+	if(res_obj.desc){
+		res_obj.desc = "## 描述 \n" + res_obj.desc;
+	}
 
 	// 模板
 	var path_arr =  __dirname.split('/');
