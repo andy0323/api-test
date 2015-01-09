@@ -60,6 +60,7 @@ function _to_markdown(pwd_dir, cb_succ, cb_fail){
 		//
 	
 		return jsonreader(res_file).then(function (obj) {
+			console.log(obj)
 			var api_md_file = pwd_dir + '/' + GENERATE_MARKDOWN_FILE_NAME;
 			return res_to_md(obj ,api_md_file ,function(md){
 				

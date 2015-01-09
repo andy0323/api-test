@@ -23,6 +23,8 @@ function res_to_md(res_obj, api_md_file ,cb_succ, cb_fail) {
 	var type     = res_obj.type;
 	var params   = res_obj.params;
 	var response = res_obj.response;	
+	
+	console.log(res_obj);
 
 	// 获取参数个数
 	var paramsCount = 0;
