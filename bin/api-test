@@ -70,7 +70,7 @@ function parse_request(){
 		log('当前目录有api.md,已经清除了。');
 	}
 	
-	parse_with_request_dir(request_dir);	
+	_parse_with_request_dir(request_dir);	
 	console.log(filelist);
 	
 	// filelist = ["/Users/sang/workspace/github/api-test/play/request/get.req"];
@@ -83,25 +83,6 @@ function parse_request(){
 	});
 }
 
-// -- private
-function parse_with_request_dir(path){
-  var dirList = fs.readdirSync(path);
- 
-  dirList.forEach(function(item){
-    if(fs.statSync(path + '/' + item).isFile()){
-			var req_file = path + '/' + item;
-			// request_processing_with_file(req_file)
-			filelist.push(req_file);
-    }
-  });
- 
-  // 子目录，暂不处理，现在是广度优先。
-  dirList.forEach(function(item){
-    if(fs.statSync(path + '/' + item).isDirectory()){
-      walk(path + '/' + item);
-    }
-  });
-}
 
 function request_processing_with_file(req_file){
 	log("当前正在处理" + req_file);
@@ -191,4 +172,24 @@ function createMarkdown() {
 	}, function() {
 
 	});
+}
+
+// -- private
+function _parse_with_request_dir(path){
+  var dirList = fs.readdirSync(path);
+ 
+  dirList.forEach(function(item){
+    if(fs.statSync(path + '/' + item).isFile()){
+			var req_file = path + '/' + item;
+			// request_processing_with_file(req_file)
+			filelist.push(req_file);
+    }
+  });
+ 
+  // 子目录，暂不处理，现在是广度优先。
+  dirList.forEach(function(item){
+    if(fs.statSync(path + '/' + item).isDirectory()){
+      walk(path + '/' + item);
+    }
+  });
 }
