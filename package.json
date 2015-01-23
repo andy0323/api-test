@@ -1,6 +1,6 @@
 {
   "name": "i-api",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "api-test: it is a api degign && doc tools",
   "main": "request.js",
   "scripts": {

@@ -189,7 +189,7 @@ function _parse_with_request_dir(path){
   // 子目录，暂不处理，现在是广度优先。
   dirList.forEach(function(item){
     if(fs.statSync(path + '/' + item).isDirectory()){
-      walk(path + '/' + item);
+      _parse_with_request_dir(path + '/' + item);
     }
   });
 }
